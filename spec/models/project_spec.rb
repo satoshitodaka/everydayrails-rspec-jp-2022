@@ -14,6 +14,13 @@ RSpec.describe Project, type: :model do
     )
   end
 
+  # プロジェクト名がなければ無効な状態であること
+  it "is invalid without a name" do
+    project = @user.projects.new(name: nil)
+    project.valid?
+    expect(project.errors[:name]).to include("can't be blank")
+  end
+
   # ユーザー単位では重複したプロジェクト名を許可しないこと
   it "does not allow duplicate project names per user" do
     new_project = @user.projects.build(
