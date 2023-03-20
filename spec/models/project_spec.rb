@@ -2,16 +2,8 @@ require 'rails_helper'
 
 RSpec.describe Project, type: :model do
   before do
-    @user = User.create(
-      first_name: 'Joe',
-      last_name: 'Tester',
-      email: 'tester@example.com',
-      password: 'password'
-    )
-
-    @user.projects.create(
-      name: 'Test Project'
-    )
+    @user = FactoryBot.create(:user)
+    FactoryBot.create(:project, user_id: @user.id, name: 'Test Project')
   end
 
   # たくさんのメモが付いていること
@@ -39,12 +31,7 @@ RSpec.describe Project, type: :model do
 
   # 二人のユーザーが同じ名前を使うことは許可すること
   it "allows two users to share a project name" do
-    other_user = User.create(
-      first_name: 'Jane',
-      last_name: 'Tester',
-      email: 'janetester@example.com',
-      password: 'password'
-    )
+    other_user = FactoryBot.create(:user, first_name: 'Jane', last_name: 'Tester')
 
     other_project = other_user.projects.build(
       name: 'Test Project'
