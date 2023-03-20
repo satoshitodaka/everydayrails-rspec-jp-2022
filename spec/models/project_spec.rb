@@ -14,6 +14,12 @@ RSpec.describe Project, type: :model do
     )
   end
 
+  # たくさんのメモが付いていること
+  it "can have many notes" do
+    project = FactoryBot.create(:project, :with_notes)
+    expect(project.notes.length).to eq 5 
+  end
+
   # プロジェクト名がなければ無効な状態であること
   it "is invalid without a name" do
     project = @user.projects.new(name: nil)
