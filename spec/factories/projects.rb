@@ -9,6 +9,11 @@ FactoryBot.define do
     trait :with_notes do
       after(:create) { |project| create_list(:note, 5, project: project)}
     end
+
+    # 無効なプロジェクト
+    trait :invalid do
+      name { nil }
+    end
   end
 
   # 昨日が締め切りのプロジェクト
