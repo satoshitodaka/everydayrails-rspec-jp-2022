@@ -23,8 +23,6 @@ RSpec.describe 'Tasks', type: :system do
 
     expect(page).to_not have_css "label#task_#{task.id}.completed"
     expect(task.reload).to_not be_completed
-
-
   end
 
 end
