@@ -4,12 +4,7 @@ RSpec.describe 'Projects', type: :system do
   # ユーザーは新しいプロジェクトを作成する
   scenario 'user creates a new project' do
     user = FactoryBot.create(:user)
-
-    visit root_path
-    click_link 'Sign in'
-    fill_in 'Email', with: user.email
-    fill_in 'Password', with: user.password
-    click_button 'Log in'
+    sign_in_as user
 
     expect {
       click_link 'New Project'
