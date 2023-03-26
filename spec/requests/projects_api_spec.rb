@@ -17,11 +17,11 @@ RSpec.describe 'ProjectsApis', type: :request do
     }
 
     expect(response).to have_http_status(:success)
-    json = JSON.parse(request.body)
+    json = JSON.parse(response.body)
     expect(json.length).to eq 1
     project_id = json[0]['id']
 
-    get api_projects_path(project_id), params: {
+    get api_project_path(project_id), params: {
       user_email: user.email,
       user_token: user.authentication_token
     }
