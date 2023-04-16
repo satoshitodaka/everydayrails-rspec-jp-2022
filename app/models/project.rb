@@ -5,6 +5,8 @@ class Project < ApplicationRecord
   has_many :notes, dependent: :destroy
   has_many :tasks, dependent: :destroy
 
+  scope :in_progress, -> { where(completed: nil).or(where(completed: false)) }
+
   attribute :due_on, :date, default: -> { Date.current }
 
   def late?

@@ -39,4 +39,21 @@ RSpec.describe 'Projects', type: :system do
     expect(page).to have_content 'Completed'
     expect(page).to_not have_button 'Complete'
   end
+
+  # 完了したプロジェクトは表示されない
+  scenario 'non display completed project' do
+    # プロジェクトを持ったユーザー
+    user = FactoryBot.create(:user)
+    project = FactoryBot.create(:project, owner: user, name: 'Sample Project')
+    # ユーザーでログインする
+    sign_in user
+    # プロジェクトを完了する
+    visit project_path(project)
+    click_button 'Complete'
+    expect(project.reload.completed?).to be true
+    # プロジェクト一覧を確認する
+    visit projects_path
+    # 完了したプロジェクトは表示されない
+    expect(page).to_not have_content 'Sample Project'
+  end
 end
